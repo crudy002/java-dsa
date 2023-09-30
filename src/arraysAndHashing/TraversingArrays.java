@@ -1,4 +1,4 @@
-package arrays;
+package arraysAndHashing;
 
 public class TraversingArrays {
 
