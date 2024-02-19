@@ -1,3 +1,4 @@
+package com.ruediger.java.algorithms;
 public class MaxParenthesesScore {
     public static int maxScore(String input) {
         int maxScore = 0;

@@ -1,3 +1,4 @@
+package com.ruediger.java.algorithms;
 import java.util.Stack;
 
 public class ReverseLinkedList {

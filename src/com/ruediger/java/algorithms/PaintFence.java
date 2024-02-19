@@ -1,3 +1,4 @@
+package com.ruediger.java.algorithms;
 import java.util.Arrays;
 import java.util.Collections;
 

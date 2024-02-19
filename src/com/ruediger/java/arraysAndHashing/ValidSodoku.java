@@ -1,4 +1,4 @@
-package arraysAndHashing;
+package com.ruediger.java.arraysAndHashing;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;

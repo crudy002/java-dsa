@@ -1,4 +1,4 @@
-package arraysAndHashing;
+package com.ruediger.java.arraysAndHashing;
 
 public class TraversingArrays {
 

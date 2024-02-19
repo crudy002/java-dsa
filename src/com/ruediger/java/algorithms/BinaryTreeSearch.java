@@ -1,3 +1,4 @@
+package com.ruediger.java.algorithms;
 
 class TreeNode {
     int val;

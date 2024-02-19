@@ -1,3 +1,4 @@
+package com.ruediger.java.algorithms;
 import java.util.HashMap;
 import java.util.Map;
 

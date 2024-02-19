@@ -1,4 +1,4 @@
-package strings;
+package com.ruediger.java.twoPointers;
 import java.awt.Insets;
 import java.util.ArrayList;
 import java.util.Arrays;
