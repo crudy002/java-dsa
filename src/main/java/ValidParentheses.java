@@ -44,18 +44,5 @@ public class ValidParentheses {
         }
         return stack.isEmpty();
     }
-
-    public static void main(String[] args) {
-        ValidParentheses solution = new ValidParentheses();
-
-        String s1 = "()";
-        System.out.println("Is \"" + s1 + "\" valid? " + solution.isValid(s1));
-
-        String s2 = "()[]{}";
-        System.out.println("Is \"" + s2 + "\" valid? " + solution.isValid(s2));
-
-        String s3 = "(]";
-        System.out.println("Is \"" + s3 + "\" valid? " + solution.isValid(s3));
-    }
 }
 
