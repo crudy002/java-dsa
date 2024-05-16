@@ -2,6 +2,9 @@
 
 This repository is dedicated to my journey of learning and practicing data structures and algorithms. I use this space to implement standard data structures, solve LeetCode-type problems, and document my progress.
 
+<img width="1112" alt="Screen Shot 2024-05-16 at 11 41 46 AM" src="https://github.com/crudy002/java-dsa/assets/80554884/c2bff543-ccea-462c-bd53-a79e52afbeef">
+
+
 ## Table of Contents
 - [About](#about)
 - [Project Structure](#project-structure)
