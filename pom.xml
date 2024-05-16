@@ -67,6 +67,12 @@
 			<artifactId>flatlaf</artifactId>
 			<version>3.4.1</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/com.fifesoft/rsyntaxtextarea -->
+		<dependency>
+			<groupId>com.fifesoft</groupId>
+			<artifactId>rsyntaxtextarea</artifactId>
+			<version>3.4.0</version>
+		</dependency>
 
 
 	</dependencies>
