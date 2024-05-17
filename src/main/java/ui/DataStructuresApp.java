@@ -17,7 +17,7 @@ import java.io.IOException;
 public class DataStructuresApp extends JFrame {
     private JPanel mainPanel;
     private RSyntaxTextArea codeArea;
-    private JTextArea consoleArea;
+    private JTextPane consoleArea;
     private JComboBox<String> dataStructureList;
     private JPanel contentPanel;
     private JPanel visualPanel;
@@ -71,10 +71,42 @@ public class DataStructuresApp extends JFrame {
         dsPanel.add(dataStructureList, BorderLayout.NORTH);
         dsPanel.add(mainPanel, BorderLayout.CENTER);
 
+        
         // Console area
-        consoleArea = new JTextArea(5, 50);
-        JScrollPane consoleScrollPane = new JScrollPane(consoleArea);
-        dsPanel.add(consoleScrollPane, BorderLayout.SOUTH);
+        
+        JPanel southPanel = new JPanel(new BorderLayout());
+        
+        consoleArea = new JTextPane();
+        JScrollPane scrollPane2 = new JScrollPane(consoleArea);
+        southPanel.add(scrollPane2, BorderLayout.CENTER);
+       
+        
+        JPanel panel = new JPanel();
+        JButton boldButton = new JButton("Bold");
+        boldButton.addActionListener(e -> RichTextEditor.setBold(consoleArea));
+        panel.add(boldButton);
+
+        JButton italicButton = new JButton("Italic");
+        italicButton.addActionListener(e -> RichTextEditor.setItalic(consoleArea));
+        panel.add(italicButton);
+
+        JButton codeButton = new JButton("Code");
+        codeButton.addActionListener(e -> RichTextEditor.setCode(consoleArea));
+        panel.add(codeButton);
+
+        JButton regularButton = new JButton("Regular");
+        regularButton.addActionListener(e -> RichTextEditor.setRegular(consoleArea));
+        panel.add(regularButton);
+
+        JButton exportButton = new JButton("Export");
+        exportButton.addActionListener(e -> RichTextEditor.exportText(consoleArea));
+        panel.add(exportButton);
+
+        southPanel.add(panel, BorderLayout.NORTH);
+        
+        dsPanel.add(southPanel, BorderLayout.SOUTH);
+        
+
 
         // Adding to frame
         add(navPanel, BorderLayout.WEST);

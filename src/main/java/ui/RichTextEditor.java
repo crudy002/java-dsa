@@ -47,7 +47,7 @@ public class RichTextEditor {
         });
     }
 
-    private static void setBold(JTextPane textPane) {
+    public static void setBold(JTextPane textPane) {
         StyledDocument doc = textPane.getStyledDocument();
         int start = textPane.getSelectionStart();
         int end = textPane.getSelectionEnd();
@@ -58,7 +58,7 @@ public class RichTextEditor {
         }
     }
 
-    private static void setItalic(JTextPane textPane) {
+    public static void setItalic(JTextPane textPane) {
         StyledDocument doc = textPane.getStyledDocument();
         int start = textPane.getSelectionStart();
         int end = textPane.getSelectionEnd();
@@ -69,7 +69,7 @@ public class RichTextEditor {
         }
     }
 
-    private static void setCode(JTextPane textPane) {
+    public static void setCode(JTextPane textPane) {
         StyledDocument doc = textPane.getStyledDocument();
         int start = textPane.getSelectionStart();
         int end = textPane.getSelectionEnd();
@@ -81,7 +81,7 @@ public class RichTextEditor {
         }
     }
 
-    private static void setRegular(JTextPane textPane) {
+    public static void setRegular(JTextPane textPane) {
         StyledDocument doc = textPane.getStyledDocument();
         int start = textPane.getSelectionStart();
         int end = textPane.getSelectionEnd();
@@ -95,7 +95,7 @@ public class RichTextEditor {
         }
     }
 
-    private static void exportText(JTextPane textPane) {
+    public static void exportText(JTextPane textPane) {
         JFileChooser fileChooser = new JFileChooser();
         int option = fileChooser.showSaveDialog(null);
         if (option == JFileChooser.APPROVE_OPTION) {
