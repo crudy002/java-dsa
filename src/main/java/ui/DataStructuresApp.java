@@ -1,6 +1,9 @@
 package main.java.ui;
 
 import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.StyledDocument;
+import javax.swing.text.rtf.RTFEditorKit;
 
 import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
 import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
@@ -12,7 +15,10 @@ import com.formdev.flatlaf.FlatLightLaf;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class DataStructuresApp extends JFrame {
     private JPanel mainPanel;
@@ -22,15 +28,19 @@ public class DataStructuresApp extends JFrame {
     private JPanel contentPanel;
     private JPanel visualPanel;
     private JLabel imageLabel;
+    
+    private HashMap<String, byte[]> notesMap; // Store notes as byte arrays
+    private String currentDataStructure;
+
 
     public DataStructuresApp() {
         super("Java Data Structures and Algorithms Explorer");
 
         FlatLightLaf.setup();
-
+        
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 600); // Adjust size to accommodate visualization
-        setLocationRelativeTo(null);
+        setExtendedState(JFrame.MAXIMIZED_BOTH); // Maximize the window
 
         // Create visual panel
         visualPanel = new JPanel();
@@ -53,8 +63,8 @@ public class DataStructuresApp extends JFrame {
         navPanel.add(btnAlgorithms);
         navPanel.add(lookAndFeelToggle);
         
-
-
+        currentDataStructure = "Array";
+        notesMap = new HashMap<>();
         mainPanel = new JPanel(new BorderLayout());
 
         codeArea = new RSyntaxTextArea(20, 60);
@@ -105,17 +115,18 @@ public class DataStructuresApp extends JFrame {
         southPanel.add(panel, BorderLayout.NORTH);
         
         dsPanel.add(southPanel, BorderLayout.SOUTH);
-        
-
 
         // Adding to frame
         add(navPanel, BorderLayout.WEST);
         contentPanel = dsPanel; // To switch visibility
 
-        // Wrap the mainPanel and visualPanel in a JSplitPane
-        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, visualPanel, contentPanel);
-        verticalSplitPane.setResizeWeight(0.3); // Adjust the resize weight as needed
+     // Wrap the mainPanel and visualPanel in a JSplitPane
+        //JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, visualPanel, contentPanel);
+        JSplitPane verticalSplitPane = new JSplitPane(JSplitPane.VERTICAL_SPLIT, contentPanel, southPanel);
+        verticalSplitPane.setResizeWeight(0.5); // Smaller weight for the visual panel
+
         add(verticalSplitPane, BorderLayout.CENTER);
+
 
         // Action listeners for navigation buttons
         btnDataStructures.addActionListener(e -> {
@@ -130,11 +141,19 @@ public class DataStructuresApp extends JFrame {
             dataStructureList.setVisible(false);
             displayContent("Algorithms");
         });
+        
+     // Set preferred sizes for panels
+     visualPanel.setPreferredSize(new Dimension(800, 200)); // Smaller height for visual panel
+     contentPanel.setPreferredSize(new Dimension(800, 600)); // Larger height for content panel
+
     }
 
     private void displayContent(String type) {
+        saveCurrentNotes();
         codeArea.setText("Displaying content for: " + type);
         consoleArea.setText("Execution results or interactive console");
+        loadNotes(type);
+        currentDataStructure = type;
     }
 
     private void toggleTheme(ActionEvent e) {
@@ -166,6 +185,7 @@ public class DataStructuresApp extends JFrame {
     }
 
     private void updateCodeArea(String dataStructure) {
+    	saveCurrentNotes();
         String definition = "";
         String javaCode = "";
         String operations = "";
@@ -208,6 +228,8 @@ public class DataStructuresApp extends JFrame {
         }
 
         codeArea.setText("Definition: " + definition + "\n\nJava Code:\n" + javaCode + "\n\nOperations:\n" + operations);
+        loadNotes(dataStructure);
+        currentDataStructure = dataStructure;
     }
 
     private void updateImage(String imageName) {
@@ -221,6 +243,36 @@ public class DataStructuresApp extends JFrame {
 
         imageLabel.setIcon(imageIcon);
     }
+    
+    private void saveCurrentNotes() {
+        try {
+            RTFEditorKit rtfEditorKit = new RTFEditorKit();
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+            rtfEditorKit.write(outputStream, consoleArea.getDocument(), 0, consoleArea.getDocument().getLength());
+            notesMap.put(currentDataStructure, outputStream.toByteArray());
+        } catch (IOException | BadLocationException ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    
+    private void loadNotes(String dataStructure) {
+        byte[] notes = notesMap.get(dataStructure);
+        if (notes != null) {
+            try {
+                RTFEditorKit rtfEditorKit = new RTFEditorKit();
+                ByteArrayInputStream inputStream = new ByteArrayInputStream(notes);
+                StyledDocument doc = (StyledDocument) rtfEditorKit.createDefaultDocument();
+                rtfEditorKit.read(inputStream, doc, 0);
+                consoleArea.setDocument(doc);
+            } catch (IOException | BadLocationException ex) {
+                ex.printStackTrace();
+            }
+        } else {
+        	consoleArea.setText("");
+        }
+    }
+
 
     public static void main(String[] args) {
         EventQueue.invokeLater(() -> {
